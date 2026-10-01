@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const SarkariAllInOneApp());
@@ -26,48 +25,29 @@ class SarkariAllInOneApp extends StatelessWidget {
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
-  Future<void> _launchPortal(BuildContext context, String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    try {
-      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Could not open $urlString')),
-          );
-        }
-      }
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Error launching official link')),
-        );
-      }
-    }
-  }
-
   final List<Map<String, dynamic>> aadhaarServices = const [
-    {"title": "Mobile Link Status", "icon": Icons.phone_android, "color": Colors.orange, "url": "https://myaadhaar.uidai.gov.in/"},
-    {"title": "Document Update", "icon": Icons.file_upload, "color": Colors.blue, "url": "https://myaadhaar.uidai.gov.in/"},
-    {"title": "Download e-Aadhaar", "icon": Icons.download, "color": Colors.green, "url": "https://myaadhaar.uidai.gov.in/genricDownloadAadhaar"},
-    {"title": "Verify e-KYC Status", "icon": Icons.verified_user, "color": Colors.purple, "url": "https://myaadhaar.uidai.gov.in/"},
+    {"title": "Mobile Link Status", "icon": Icons.phone_android, "color": Colors.orange},
+    {"title": "Document Update", "icon": Icons.file_upload, "color": Colors.blue},
+    {"title": "Download e-Aadhaar", "icon": Icons.download, "color": Colors.green},
+    {"title": "Verify e-KYC Status", "icon": Icons.verified_user, "color": Colors.purple},
   ];
 
   final List<Map<String, dynamic>> bankServices = const [
-    {"title": "NPCI Bank Link Status", "icon": Icons.account_balance, "color": Colors.teal, "url": "https://myaadhaar.uidai.gov.in/check-aadhaar-bank-seeding"},
-    {"title": "DBT Status Portal", "icon": Icons.payments, "color": Colors.deepOrange, "url": "https://pfms.nic.in/"},
+    {"title": "NPCI Bank Link Status", "icon": Icons.account_balance, "color": Colors.teal},
+    {"title": "DBT Status Portal", "icon": Icons.payments, "color": Colors.deepOrange},
   ];
 
   final List<Map<String, dynamic>> rationServices = const [
-    {"title": "Download Ration Card", "icon": Icons.card_membership, "color": Colors.amber, "url": "https://nfsa.gov.in/"},
-    {"title": "Ration e-KYC Status", "icon": Icons.fact_check, "color": Colors.indigo, "url": "https://nfsa.gov.in/"},
-    {"title": "Aadhaar Seeding Status", "icon": Icons.link, "color": Colors.lightGreen, "url": "https://nfsa.gov.in/"},
-    {"title": "Ration Shop Locator", "icon": Icons.storefront, "color": Colors.pink, "url": "https://nfsa.gov.in/"},
+    {"title": "Download Ration Card", "icon": Icons.card_membership, "color": Colors.amber},
+    {"title": "Ration e-KYC Status", "icon": Icons.fact_check, "color": Colors.indigo},
+    {"title": "Aadhaar Seeding Status", "icon": Icons.link, "color": Colors.lightGreen},
+    {"title": "Ration Shop Locator", "icon": Icons.storefront, "color": Colors.pink},
   ];
 
   final List<Map<String, dynamic>> panServices = const [
-    {"title": "PAN-Aadhaar Link Status", "icon": Icons.qr_code, "color": Colors.red, "url": "https://eportal.incometax.gov.in/iec/foservices/#/pre-login/link-aadhaar-status"},
-    {"title": "Link PAN with Aadhaar", "icon": Icons.add_link, "color": Colors.cyan, "url": "https://eportal.incometax.gov.in/iec/foservices/#/pre-login/aadharlink"},
-    {"title": "Download Instant e-PAN", "icon": Icons.picture_as_pdf, "color": Colors.deepPurple, "url": "https://eportal.incometax.gov.in/iec/foservices/#/pre-login/instant-e-pan"},
+    {"title": "PAN-Aadhaar Link Status", "icon": Icons.qr_code, "color": Colors.red},
+    {"title": "Link PAN with Aadhaar", "icon": Icons.add_link, "color": Colors.cyan},
+    {"title": "Download Instant e-PAN", "icon": Icons.picture_as_pdf, "color": Colors.deepPurple},
   ];
 
   @override
@@ -165,7 +145,11 @@ class DashboardScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: InkWell(
             borderRadius: BorderRadius.circular(10),
-            onTap: () => _launchPortal(context, item["url"]),
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Opening ${item["title"]}...')),
+              );
+            },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
